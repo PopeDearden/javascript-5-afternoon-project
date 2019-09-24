@@ -22,13 +22,13 @@ function outer() {
   Invoke outer saving the return value into another variable called 'inner'.
 */
   
-// Code Here
+const inner = outer()
 
 
 
 //Once you do that, invoke inner.
 
-//Code Here
+inner()
 
 
 
@@ -51,7 +51,9 @@ function callFriend(name) {
   (HINT: You will need to pass in arguments to both function invocations)
 */
 
-//Code Here
+const callJake = callFriend('Jake')
+callJake('435-555-9248')
+
 
 
 
@@ -62,15 +64,21 @@ function callFriend(name) {
 */
 
 //Code Here
+var makeCounter = function(num){
+  num=0
+    return function(){
+      num ++
+      return num;
+    };
+  }
 
 
-
-//Uncomment this once you make your function
-//   var count = makeCounter();
-//   count(); // 1
-//   count(); // 2
-//   count(); // 3
-//   count(); // 4
+// Uncomment this once you make your function
+  var count = makeCounter();
+  count(); // 1
+  count(); // 2
+  count(); // 3
+  count(); // 4
 
 
 
@@ -87,17 +95,22 @@ function callFriend(name) {
 
 function counterFactory(value) {
   // Code here.
-
+// let value=0
   return {
-
+    inc: function(){
+      return ++value
+    },
+    dec: function(){
+      return --value
+    }
   };
 }
 
 counter = counterFactory(10);
-// counter.inc() // 11
-// counter.inc() // 12
-// counter.inc() // 13
-// counter.dec() // 12
+counter.inc() // 11
+counter.inc() // 12
+counter.inc() // 13
+counter.dec() // 12
 
 
 
@@ -110,12 +123,15 @@ counter = counterFactory(10);
 */
 
 function motivation( firstname, lastname ) {
-  var welcomeText = "You're doing awesome, keep it up";
+  var welcomeText = "You're doing awesome, keep it up ";
 
-  // code message function here.
+  function message(){
+        return welcomeText + firstname + ' ' + lastname + ".";
+      }
+      return message;
 
   //Uncommment this to return the value of your message function
-  //return message;
+  // return message;
 }
 
 var greeting = motivation('Billy', 'Bob'); // 'You're doing awesome keep it up Billy Bob.
@@ -144,6 +160,9 @@ var module = (function() {
   // outside our lexical scope
   return {
     // Code here.
+    publicMethod(){
+      return privateMethod()
+    }
   };
 })();
 
@@ -162,7 +181,15 @@ function secretNumber() {
   var secret = 143;
 
   return {
-    // Code here
+    addToSecret: function(val){
+      secret += val
+      return secret
+
+    },
+    takeAwayFromSecret: function(val){
+      secret -= val
+      return secret
+    }
   };
 }
 
@@ -188,9 +215,15 @@ function secretNumber() {
 
 function timeOutCounter() {
   for (var i = 0; i <= 5; i++) {
-    setTimeout(function() {
-      console.log(i);
-    }, i * 1000);
+    setTimeout(newScope(i), i*1000)
+  }
+  function newScope(i) {
+    return function(){
+      console.log(i)
+    }
   }
 }
+    
 timeOutCounter();
+
+
